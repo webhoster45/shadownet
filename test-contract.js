@@ -1,8 +1,8 @@
 import { Account, RpcProvider } from "starknet";
 
-const CONTRACT_ADDRESS = "0x49e43ce869b6c4f9415b1d088a92acb048b87ede6370f9ddc9013604ea79ceb";
-const ACCOUNT_ADDRESS = "0x01Eb44C3B3dfb279C7414de40ccf5C59Ba6a27fCcCEd8a00534f040aE73d3a01";
-const PRIVATE_KEY = "0x023d471eac97a9e733b9e7d2c6a9eb4b312fe8eafe318b09c7241167882486db";
+const CONTRACT_ADDRESS = Process.env.Contract_Address;
+const ACCOUNT_ADDRESS = Process.env.Account_Address;
+const PRIVATE_KEY = Process.env.Private_key;
 const RPC_URL = "https://starknet-sepolia.g.alchemy.com/v2/aSzNwLtr_R5h1CQLJhUuC";
 
 async function test() {
