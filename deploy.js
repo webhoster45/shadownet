@@ -1,9 +1,10 @@
+import "./alchemy-rpc-wrapper.js";
 import fs from "fs";
 import { Account, Contract, RpcProvider } from "starknet";
 
 const PRIVATE_KEY = process.env.STARKNET_PRIVATE_KEY;
 const ACCOUNT_ADDRESS = process.env.STARKNET_ACCOUNT_ADDRESS;
-const RPC_URL = process.env.STARKNET_RPC_URL || "https://sepolia.starknet.io/rpc/v0_7";
+const RPC_URL = process.env.STARKNET_RPC_URL || "https://starknet-sepolia.g.alchemy.com/v2/aSzNwLtr_R5h1CQLJhUuC";
 
 if (!PRIVATE_KEY || !ACCOUNT_ADDRESS) {
   console.error(
@@ -35,6 +36,8 @@ async function deploy() {
     );
 
     console.log("Deploying ShadowNet contract...");
+    
+    // Add max fee with proper gas estimation
     const declareResponse = await account.declare({
       contract: sierraContract,
       casm: casmContract,
@@ -71,6 +74,7 @@ async function deploy() {
     console.log(`Tx Hash: ${transactionHash}`);
   } catch (error) {
     console.error("Deployment failed:", error.message);
+    console.error("Full error:", error);
     process.exit(1);
   }
 }

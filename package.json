@@ -6,6 +6,7 @@
     "deploy": "node deploy.js"
   },
   "dependencies": {
-    "starknet": "^5.28.0"
+    "axios": "^1.13.4",
+    "starknet": "^9.2.1"
   }
 }
