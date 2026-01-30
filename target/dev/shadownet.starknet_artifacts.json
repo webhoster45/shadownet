@@ -1,0 +1,1 @@
+{"version":1,"contracts":[{"id":"7t82dld690epg","package_name":"shadownet","contract_name":"ShadowNet","module_path":"shadownet::ShadowNet","artifacts":{"sierra":"shadownet_ShadowNet.contract_class.json","casm":"shadownet_ShadowNet.compiled_contract_class.json"}}]}

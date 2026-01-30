@@ -1,8 +1,10 @@
-use starknet::storage::Map;
 use starknet::get_caller_address;
+use starknet::storage::Map;
 
 #[starknet::contract]
 mod ShadowNet {
+    use starknet::get_caller_address;
+    use starknet::storage::Map;
 
     #[storage]
     struct Storage {
@@ -10,9 +12,6 @@ mod ShadowNet {
         vault_commitment: Map<felt252, felt252>,
     }
 
-    // -----------------------
-    // Create a vault
-    // -----------------------
     #[external(v0)]
     fn create_vault(
         ref self: ContractState,
@@ -20,20 +19,17 @@ mod ShadowNet {
         commitment: felt252,
     ) {
         let caller = get_caller_address();
-        self.vault_owner.entry(vault_id).write(caller);
-        self.vault_commitment.entry(vault_id).write(commitment);
+        self.vault_owner.write(vault_id, caller.into());
+        self.vault_commitment.write(vault_id, commitment);
     }
 
-    // -----------------------
-    // Get vault info
-    // -----------------------
     #[external(v0)]
     fn get_vault(
         self: @ContractState,
         vault_id: felt252,
     ) -> (felt252, felt252) {
-        let owner = self.vault_owner.entry(vault_id).read();
-        let commitment = self.vault_commitment.entry(vault_id).read();
+        let owner = self.vault_owner.read(vault_id);
+        let commitment = self.vault_commitment.read(vault_id);
         (owner, commitment)
     }
 }

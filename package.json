@@ -1,0 +1,11 @@
+{
+  "name": "shadownet-deploy",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "deploy": "node deploy.js"
+  },
+  "dependencies": {
+    "starknet": "^5.28.0"
+  }
+}
