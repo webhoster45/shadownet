@@ -3,7 +3,7 @@ import { Account, RpcProvider } from "starknet";
 const CONTRACT_ADDRESS = Process.env.Contract_Address;
 const ACCOUNT_ADDRESS = Process.env.Account_Address;
 const PRIVATE_KEY = Process.env.Private_key;
-const RPC_URL = "https://starknet-sepolia.g.alchemy.com/v2/aSzNwLtr_R5h1CQLJhUuC";
+const RPC_URL = Process.env.Rpc_Url;
 
 async function test() {
   try {
