@@ -2,7 +2,7 @@ import axios from "axios";
 import fs from "fs";
 import { Account, RpcProvider, shortString } from "starknet";
 
-const PRIVATE_KEY = process.env.STARKNET_PRIVATE_KEY;
+let PRIVATE_KEY = process.env.STARKNET_PRIVATE_KEY;
 let ACCOUNT_ADDRESS = process.env.STARKNET_ACCOUNT_ADDRESS;
 const RPC_URL = process.env.STARKNET_RPC_URL || "https://starknet-sepolia.g.alchemy.com/v2/aSzNwLtr_R5h1CQLJhUuC";
 
@@ -39,6 +39,9 @@ async function deploy() {
       signer: PRIVATE_KEY,
     });
     console.log(`✓ Account initialized: ${ACCOUNT_ADDRESS}`);
+
+    // Clear private key from memory after account creation
+    PRIVATE_KEY = null;
 
     // Override the fetch method to add simulation_flags for Alchemy
     const originalFetchMethod = provider.fetch.bind(provider);
@@ -132,6 +135,9 @@ async function deploy() {
       console.error("RPC Error:", error.response.data.error);
     }
     process.exit(1);
+  } finally {
+    // Ensure private key is cleared from memory
+    PRIVATE_KEY = null;
   }
 }
 

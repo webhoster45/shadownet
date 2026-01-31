@@ -1,9 +1,14 @@
 import { Account, RpcProvider } from "starknet";
 
-const CONTRACT_ADDRESS = Process.env.Contract_Address;
-const ACCOUNT_ADDRESS = Process.env.Account_Address;
-const PRIVATE_KEY = Process.env.Private_key;
-const RPC_URL = Process.env.Rpc_Url;
+const CONTRACT_ADDRESS = process.env.STARKNET_CONTRACT_ADDRESS || "0x49e43ce869b6c4f9415b1d088a92acb048b87ede6370f9ddc9013604ea79ceb";
+const ACCOUNT_ADDRESS = process.env.STARKNET_ACCOUNT_ADDRESS;
+let PRIVATE_KEY = process.env.STARKNET_PRIVATE_KEY;
+const RPC_URL = process.env.STARKNET_RPC_URL || "https://starknet-sepolia.g.alchemy.com/v2/aSzNwLtr_R5h1CQLJhUuC";
+
+if (!ACCOUNT_ADDRESS || !PRIVATE_KEY) {
+  console.error("Error: STARKNET_ACCOUNT_ADDRESS and STARKNET_PRIVATE_KEY environment variables are required");
+  process.exit(1);
+}
 
 async function test() {
   try {
@@ -23,6 +28,9 @@ async function test() {
       provider: provider,
       signer: PRIVATE_KEY,
     });
+
+    // Clear private key from memory after account creation
+    PRIVATE_KEY = null;
 
     console.log("✓ Connected to Starknet Sepolia");
     console.log("");
@@ -82,6 +90,9 @@ async function test() {
       console.error("RPC Error:", error.response.data.error);
     }
     process.exit(1);
+  } finally {
+    // Ensure private key is cleared from memory
+    PRIVATE_KEY = null;
   }
 }
 

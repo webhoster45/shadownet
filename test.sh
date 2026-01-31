@@ -4,10 +4,15 @@
 
 set -e
 
-CONTRACT_ADDRESS="0x49e43ce869b6c4f9415b1d088a92acb048b87ede6370f9ddc9013604ea79ceb"
-ACCOUNT_ADDRESS="0x01Eb44C3B3dfb279C7414de40ccf5C59Ba6a27fCcCEd8a00534f040aE73d3a01"
-PRIVATE_KEY="0x023d471eac97a9e733b9e7d2c6a9eb4b312fe8eafe318b09c7241167882486db"
-RPC_URL="https://starknet-sepolia.g.alchemy.com/v2/aSzNwLtr_R5h1CQLJhUuC"
+CONTRACT_ADDRESS="${STARKNET_CONTRACT_ADDRESS:-0x49e43ce869b6c4f9415b1d088a92acb048b87ede6370f9ddc9013604ea79ceb}"
+ACCOUNT_ADDRESS="${STARKNET_ACCOUNT_ADDRESS}"
+PRIVATE_KEY="${STARKNET_PRIVATE_KEY}"
+RPC_URL="${STARKNET_RPC_URL:-https://starknet-sepolia.g.alchemy.com/v2/aSzNwLtr_R5h1CQLJhUuC}"
+
+if [ -z "$ACCOUNT_ADDRESS" ] || [ -z "$PRIVATE_KEY" ]; then
+  echo "Error: STARKNET_ACCOUNT_ADDRESS and STARKNET_PRIVATE_KEY environment variables are required"
+  exit 1
+fi
 
 echo "============================================"
 echo "ShadowNet Contract Test"
@@ -57,3 +62,7 @@ echo ""
 echo "============================================"
 echo "✓ Test Complete!"
 echo "============================================"
+
+# Clear secrets from memory
+unset PRIVATE_KEY
+unset ACCOUNT_ADDRESS
