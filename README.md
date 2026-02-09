@@ -1,4 +1,4 @@
-# ShadowNet
+## ShadowNet
 
 **ShadowNet** is a privacy-first DeFi prototype built on **Starknet** that demonstrates how users can create and manage collateralized vaults **without exposing sensitive financial data on-chain**.
 
@@ -35,7 +35,7 @@ ShadowNet introduces a vault system where:
 This preserves privacy while remaining verifiable and composable.
 
 ---
-##Why Starknet?
+## Why Starknet?
 
 ShadowNet is built on Starknet because privacy-focused DeFi requires scalability and cryptographic-native infrastructure. Starknet’s ZK-STARK foundation makes it the ideal environment for commitment-based vault systems today, and future upgrades into full zero-knowledge proofs tomorrow — without sacrificing performance or composability.
 ---
@@ -88,4 +88,5 @@ This is a **hackathon prototype**, not a production system.
 ```bash
 npm install
 npm run dev
+
 
