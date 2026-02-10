@@ -1,10 +1,12 @@
 ## ShadowNet
 
-**ShadowNet** is a privacy-first DeFi prototype built on **Starknet** that demonstrates how users can create and manage collateralized vaults **without exposing sensitive financial data on-chain**.
+**ShadowNet** is a privacy-first DeFi primitive on Starknet that enables confidential BTC-backed vaults by storing **cryptographic commitments** instead of raw financial positions on-chain.
 
-Instead of storing balances, debt, or liquidation parameters, ShadowNet records a single **cryptographic commitment hash** representing a vault’s private state. This allows vaults to exist and be interacted with while preserving user privacy.
+Traditional DeFi vaults publicly expose collateral, debt ratios, and liquidation thresholds. ShadowNet flips this model by committing vault state using hash-based commitments, forming the foundation for ZK-private borrowing and synthetic asset minting.
 
-This project is intentionally minimal and demo-focused for hackathon evaluation.
+In this prototype, users can create and load vaults where only a commitment hash is stored on Starknet. The architecture is designed to integrate zero-knowledge proofs, allowing users to prove solvency and collateralization without revealing sensitive financial data.
+
+ShadowNet targets the emerging BTCFi ecosystem on Starknet, offering a base layer for confidential borrowing, private collateral management, and future trustless ZK verification.
 
 ---
 
@@ -80,6 +82,20 @@ ShadowNet is built on Starknet because privacy-focused DeFi requires scalability
 
 This is a **hackathon prototype**, not a production system.
 
+---
+
+### 🔐 ZK-Proof Integration (Next Step)
+User Inputs (private)
+  ├─ collateral
+  ├─ debt
+  └─ nonce
+        ↓
+   ZK Proof (off-chain)
+        ↓
+  Starknet Verifier
+        ↓
+   Commitment Match ✓
+
 
 ## 🧪 Local Development
 
@@ -88,5 +104,6 @@ This is a **hackathon prototype**, not a production system.
 ```bash
 npm install
 npm run dev
+
 
 
