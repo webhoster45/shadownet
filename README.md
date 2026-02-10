@@ -85,14 +85,13 @@ This is a **hackathon prototype**, not a production system.
 ---
 
 ### 🔐 ZK-Proof Integration (Next Step)
-graph TD
-    subgraph Private [Private Layer]
-    A[Collateral] & B[Debt] & C[Nonce] --> D[ZK Proof Generator]
-    end
-    D -- "Off-chain Proof" --> E[Starknet Verifier]
-    E --> F{Commitment Match?}
-    F -- "Yes" --> G[✓ Verified]
 
+| Layer | Component | Data / Action |
+| :--- | :--- | :--- |
+| **Input** | Private Data | `collateral`, `debt`, `nonce` |
+| **Generation** | Off-chain | ZK Proof Generation |
+| **Verification** | Starknet Verifier | On-chain Proof Validation |
+| **Result** | Commitment Match | ✓ Verified |
 
 
 ## 🧪 Local Development
@@ -102,6 +101,7 @@ graph TD
 ```bash
 npm install
 npm run dev
+
 
 
 
