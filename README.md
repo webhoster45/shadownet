@@ -85,16 +85,14 @@ This is a **hackathon prototype**, not a production system.
 ---
 
 ### 🔐 ZK-Proof Integration (Next Step)
-User Inputs (private)
-  ├─ collateral
-  ├─ debt
-  └─ nonce
-        ↓
-   ZK Proof (off-chain)
-        ↓
-  Starknet Verifier
-        ↓
-   Commitment Match ✓
+graph TD
+    subgraph Private [Private Layer]
+    A[Collateral] & B[Debt] & C[Nonce] --> D[ZK Proof Generator]
+    end
+    D -- "Off-chain Proof" --> E[Starknet Verifier]
+    E --> F{Commitment Match?}
+    F -- "Yes" --> G[✓ Verified]
+
 
 
 ## 🧪 Local Development
@@ -104,6 +102,7 @@ User Inputs (private)
 ```bash
 npm install
 npm run dev
+
 
 
 
