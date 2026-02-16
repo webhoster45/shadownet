@@ -1,98 +1,160 @@
 ## ShadowNet
 
-**ShadowNet** is a privacy-first DeFi primitive on Starknet that enables confidential BTC-backed vaults by storing **cryptographic commitments** instead of raw financial positions on-chain.
+**ShadowNet** is a BTCFi vault primitive on Starknet that enables **BTC-backed borrowing** through **confidential commitment-based vaults**.
 
-Traditional DeFi vaults publicly expose collateral, debt ratios, and liquidation thresholds. ShadowNet flips this model by committing vault state using hash-based commitments, forming the foundation for ZK-private borrowing and synthetic asset minting.
+As Bitcoin liquidity expands into Starknet via bridges, wrappers, and BTCFi infrastructure, vault-based lending becomes inevitable — but today’s systems expose collateral, debt, and liquidation thresholds publicly.
 
-In this prototype, users can create and load vaults where only a commitment hash is stored on Starknet. The architecture is designed to integrate zero-knowledge proofs, allowing users to prove solvency and collateralization without revealing sensitive financial data.
-
-ShadowNet targets the emerging BTCFi ecosystem on Starknet, offering a base layer for confidential borrowing, private collateral management, and future trustless ZK verification.
+ShadowNet introduces a new vault model where BTC-backed positions can exist **without revealing sensitive financial exposure on-chain**, forming the foundation for future **ZK-private borrowing** and synthetic BTC issuance.
 
 ---
 
-## 🎯 Problem
+## 🟠 The Problem (BTCFi Needs Privacy)
 
-Most DeFi protocols expose:
+Most BTCFi lending protocols today expose:
+
 - Collateral amounts  
 - Debt positions  
 - Liquidation thresholds  
+- Borrower strategies  
 
-This transparency enables:
+This creates serious issues:
+
 - Wallet surveillance  
-- Strategy leakage  
-- MEV targeting  
+- Liquidation bot targeting  
+- MEV exploitation  
+- Institutions avoiding BTCFi due to transparency risk  
 
-ShadowNet explores a different model: **privacy-first vaults**.
+Bitcoin-backed DeFi cannot scale if every vault becomes a public target.
+
+---
+
+## 💡 The ShadowNet Approach
+
+ShadowNet explores a vault architecture where:
+
+- BTC collateral is represented inside a vault system  
+- Sensitive vault state remains **private by default**
+- Only a cryptographic commitment is stored publicly on Starknet  
+- Vault interactions reference commitments instead of balances  
+
+This enables BTCFi borrowing infrastructure that is:
+
+- more private  
+- more resistant to liquidation games  
+- institution-friendly  
+- ZK-upgradable  
 
 ---
 
-## 💡 Solution
+## 🔐 Commitment-Based Vault Model
 
-ShadowNet introduces a vault system where:
-- Sensitive vault data is kept **off-chain**
-- A **commitment hash** represents the vault’s private state
-- Only the commitment is stored on Starknet
-- Vault interactions reference commitments instead of balances
+Instead of storing:
 
-This preserves privacy while remaining verifiable and composable.
+> “User locked 2 BTC and borrowed 1.5 BTC”
 
----
-## Why Starknet?
+ShadowNet stores only:
 
-ShadowNet is built on Starknet because privacy-focused DeFi requires scalability and cryptographic-native infrastructure. Starknet’s ZK-STARK foundation makes it the ideal environment for commitment-based vault systems today, and future upgrades into full zero-knowledge proofs tomorrow — without sacrificing performance or composability.
+> `commitment = H(collateral, debt, nonce)`
+
+On-chain, Starknet only sees:
+
+- Vault ID  
+- Owner  
+- Commitment hash  
+
+Not the vault’s real financial exposure.
+
 ---
 
 ## 🧱 Architecture
 
 ### Smart Contract (Cairo · Starknet)
 
-- Deployed on **Starknet Sepolia**
+- Deployed on **Starknet Sepolia Testnet**
 - Stores:
+
   - `vault_id → owner`
   - `vault_id → commitment_hash`
-- No balances or collateral values stored on-chain
-- Simple, auditable, privacy-safe storage
+
+- No collateral values stored on-chain  
+- Minimal, auditable BTCFi vault primitive  
+
+---
 
 ### Frontend (React + JavaScript)
 
-- Wallet connection (ArgentX / Starknet wallets)
-- Vault creation flow
-- Vault dashboard & interaction
-- Local persistence for demo UX
-- Clear distinction between **live on-chain** and **mocked logic**
+The prototype frontend provides a demo-ready BTCFi flow:
+
+- Starknet wallet connection (ArgentX supported)
+- Vault creation UX
+- Vault dashboard + on-chain querying
+- Commitment display + verification
+- Demo synthetic minting (sBTC)
+- Local persistence for hackathon UX
 
 ---
 
 ## 🔁 Demo Flow
 
-1. Connect Starknet wallet
-2. Lock BTC (mocked) and create a vault
-3. Commitment hash stored on-chain
-4. View and manage vault privately
-5. Mint synthetic asset (mocked UX)
+1. Connect Starknet wallet  
+2. Lock BTC collateral (**mocked in prototype**)  
+3. Create vault → commitment stored on-chain  
+4. Load vault by ID → verify commitment exists  
+5. Mint synthetic BTC asset (**mocked UX demo**)  
 
 ---
 
 ## ⚠️ Prototype Notes
 
-- BTC bridge: **mocked**
-- Synthetic minting: **mocked**
-- ZK proofs: **conceptual**
-- Focus: **privacy architecture + UX flow**
+This is a hackathon prototype focused on the vault privacy primitive:
 
-This is a **hackathon prototype**, not a production system.
+- BTC bridge integration: **mocked**
+- Synthetic minting logic: **mocked**
+- ZK solvency proofs: **conceptual**
+- Core shipped component: **commitment-based BTC vault layer**
 
 ---
 
-### 🔐 ZK-Proof Integration (Next Step)
+## 🚀 Why This Matters for Bitcoin Track
 
-| Layer | Component | Data / Action |
-| :--- | :--- | :--- |
-| **Input** | Private Data | `collateral`, `debt`, `nonce` |
-| **Generation** | Off-chain | ZK Proof Generation |
-| **Verification** | Starknet Verifier | On-chain Proof Validation |
-| **Result** | Commitment Match | ✓ Verified |
+ShadowNet is designed for the next wave of BTCFi on Starknet:
 
+- BTC-backed lending requires vault infrastructure  
+- Vault privacy prevents liquidation targeting  
+- Commitment storage is the missing base layer  
+- Starknet is the natural home for ZK-upgradable BTCFi  
+
+ShadowNet delivers the foundation for:
+
+- confidential BTC collateral vaults  
+- private borrowing  
+- future ZK-proof secured solvency  
+
+---
+
+## 🧩 Why Starknet?
+
+ShadowNet is built on Starknet because:
+
+- Starknet is ZK-native (STARK proofs)
+- It supports scalable BTCFi execution
+- Commitment-based vaults upgrade naturally into full ZK verification
+- Future private borrowing can be verified without revealing balances
+
+Starknet is the ideal settlement layer for confidential BTCFi.
+
+---
+
+## 🔐 ZK Upgrade Path (Next Step)
+
+| Layer | Component | Role |
+|------|----------|------|
+| Input | Private Vault Data | `collateral`, `debt`, `nonce` |
+| Proof | Off-chain Generation | Solvency proof creation |
+| Verify | Starknet Verifier | On-chain validation |
+| Result | Commitment Match | Privacy-preserving borrowing |
+
+---
 
 ## 🧪 Local Development
 
@@ -101,8 +163,3 @@ This is a **hackathon prototype**, not a production system.
 ```bash
 npm install
 npm run dev
-
-
-
-
-
