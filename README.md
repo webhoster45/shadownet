@@ -156,6 +156,9 @@ Starknet is the ideal settlement layer for confidential BTCFi.
 
 ---
 
+## Contract Address = "0x49e43ce869b6c4f9415b1d088a92acb048b87ede6370f9ddc9013604ea79ceb"
+## RPC URL=https://starknet-sepolia.g.alchemy.com/v2/aSzNwLtr_R5h1CQLJhUuC"
+
 ## 🧪 Local Development
 
 ### Frontend
@@ -163,3 +166,4 @@ Starknet is the ideal settlement layer for confidential BTCFi.
 ```bash
 npm install
 npm run dev
+
