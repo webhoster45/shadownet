@@ -190,12 +190,13 @@ Demo: https://shadownet-prototype.netlify.app/
 
 ### Frontend
 
-**Built during Starknet redefine hackathon: contract + UI + deployment**
 
 
 ```bash
 npm install
 npm run dev
+```
 
 
+**Built during Starknet redefine hackathon: contract + UI + deployment**
 
