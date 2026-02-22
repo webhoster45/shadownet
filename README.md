@@ -168,7 +168,7 @@ Contract Address= 0x49e43ce869b6c4f9415b1d088a92acb048b87ede6370f9ddc9013604ea79
 
 ---
 
-Vision
+**Vision**
 
 ShadowNet delivers the foundational primitive required for private borrowing systems.
 
@@ -182,21 +182,154 @@ privacy-preserving solvency proofs
 
 institution-ready on-chain finance
 
-Links
+# **⚙️ How It Works (Cairo 1 – Starknet v0.13+)**
 
-Demo: https://shadownet-prototype.netlify.app/
+# 
 
-## 🧪 Local Development
+ShadowNet implements a commitment-based vault primitive using a minimal, composable contract architecture optimized for Starknet’s validity rollup model.
 
-### Frontend
+The system follows a Commit–Store–Reference pattern:
 
+**1️⃣ Commit (Off-Chain State Construction)**
 
+Vault financial state (collateral, debt, nonce, metadata) is computed off-chain.
 
-```bash
-npm install
-npm run dev
-```
+Instead of publishing raw position data, the client generates a cryptographic commitment:
 
+commitment = H(hidden_state)
+
+Where hidden_state may include:
+
+collateral amount
+
+debt amount
+
+vault nonce
+
+optional metadata
+
+This ensures:
+
+No sensitive financial state is exposed on-chain
+
+The vault can be referenced deterministically
+
+Future ZK proofs can validate solvency against stored commitments
+
+---
+
+2️⃣ Store (Cairo Contract – Starknet)
+
+The Starknet contract stores only:
+
+**Storage Model**
+
+`#[storage]`
+
+`struct Storage {`
+
+`vault_owner: Map<felt252, felt252>,`
+
+`vault_commitment: Map<felt252, felt252>,`
+
+`}`
+
+Key architectural properties:
+
+Uses Starknet-native Map storage abstraction
+
+Vault indexing via felt252 identifiers
+
+Ownership enforced via get_caller_address()
+
+No raw collateral or debt state persisted
+
+This design minimizes on-chain attack surface while maintaining public verifiability.
+
+**3️⃣ Reference (On-Chain Query + Off-Chain Proof Layer)**
+
+The get_vault entrypoint allows:
+
+Ownership verification
+
+Commitment retrieval
+
+Off-chain state reconciliation
+
+**Future iterations can integrate:**
+
+Pedersen-based commitment schemes
+
+Poseidon hash optimization
+
+Cairo-based verifier contracts
+
+ZK solvency proofs referencing stored commitments
+
+The current architecture is intentionally modular and ZK-ready without embedding premature proof logic.
+
+## **Technical Stack**
+
+**Language**
+
+**Cairo 1 (Starknet-native contract model)**
+
+`#[starknet::contract] module structure`
+
+`Explicit #[storage] layout`
+
+`#[external(v0)] entrypoints`
+
+`ContractState mutability model (ref vs @)`
+
+Network:
+
+Starknet Sepolia Testnet
+
+Deployed contract with live storage interaction
+
+**Storage Layer**
+
+`starknet::storage::Map`
+
+Felt252-based vault indexing
+
+Deterministic state writes
+
+Cryptographic Design
+
+Commitment abstraction (hash-ready architecture)
+
+Compatible with Stark-friendly hash primitives (Pedersen / Poseidon)
+
+Designed for future Cairo verifier integration
+
+Frontend Integration
+
+Starknet.js RPC execution
+
+Account abstraction interaction
+
+Provider-based read calls (no gas for views)
+
+## **🧱 Architectural Intent**
+
+ShadowNet is intentionally minimal.
+
+It does not yet implement:
+
+Liquidation engines
+
+Bridging logic
+
+ZK proof verification
+
+Instead, it establishes:
+
+> A Starknet-native commitment storage layer designed for extensible confidential DeFi systems.
+
+PLEASE CHECK OUT THE INTEGRETION.MD
 
 **Built during Starknet redefine hackathon: contract + UI + deployment**
+
 
